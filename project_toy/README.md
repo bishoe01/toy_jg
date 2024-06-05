@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 나만무 토이 게시판 프로젝트 (프론트엔드)
 
-## Getting Started
 
-First, run the development server:
+### 프로젝트 소개 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. 게시판 UI
+2. 게시판 CRUD
+3. 게시판 댓글 CRUD
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---- 
+### 프로젝트 기간
+>##### 기간 : 2024.06.04 ~ 2024.06.11
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+>기술스택 : Next.js, Recoil, tailwindcss, axios, formik-yup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+업데이트 현황 (6.4)
+1. 개발환경 세팅
+2. Login 페이지 구현 (formik-yup 유효성 검사 적용)
 
-To learn more about Next.js, take a look at the following resources:
+업데이트 현황 (6.5)
+1. Recoil 적용
+2. 글 조회, 삭제, 생성 로직 구현
+3. 삭제,생성 로직 커스텀훅 적용
+4. 게시판 UI 구현
+5. 404 page,login Failed 이미지 추가
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 업데이트 예정
+1. 댓글 CRUD
+2. 게시판 페이지네이션 || 무한스크롤
+3. 게시판 검색기능 
+4. react-query 적용
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
