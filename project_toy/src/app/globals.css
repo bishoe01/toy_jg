@@ -16,9 +16,13 @@
   }
 }
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+
+.card_title{
+    @apply text-2xl font-bold text-gray-800;
 }
