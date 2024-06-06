@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ANI_BASE } from "@/style/animation";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0A0E10] absolute top-0 w-full h-[100vh] z-20">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0A0E10] absolute top-0 left-0 w-full h-[100vh] z-50">
       <Image
         src="/error_404.png"
         alt="404 Error"
@@ -17,8 +18,8 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="bg-primary 
-         text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+        className={`bg-primary 
+         text-white font-bold py-2 px-4 rounded-md ${ANI_BASE}`}
       >
         메인 페이지로 돌아가기
       </Link>

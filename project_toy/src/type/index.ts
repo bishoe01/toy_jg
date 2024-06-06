@@ -6,7 +6,7 @@ export type Writer = {
 
 
 export type Posts = {
-  post_id: number;
+   _id?: string;
   title: string;
   content: string;
   date: string;  // DATE타입에서 -> string타입으로 변경(ISO 포맷)

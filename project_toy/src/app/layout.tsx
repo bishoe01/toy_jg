@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} relative px-4`}>
+      <body className={`${roboto.className} relative px-4 pb-24 pt-20`}>
         <Header />
         <RecoilRootWrapper>{children}</RecoilRootWrapper>
         <Footer />

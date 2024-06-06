@@ -22,9 +22,9 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <div
       onClick={() => router.push(`/posts/${post._id}`)}
-      className="bg-primary rounded-2xl p-4 relative cursor-pointer hover:brightness-125 transition-transform duration-300 ease-in-out shadow-md" // 그림자 추가
+      className="bg-primary rounded-2xl p-4 pt-2 relative cursor-pointer hover:brightness-125 transition-transform duration-300 ease-in-out shadow-md" // 그림자 추가
     >
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-whiter">
           {post.writer.id}
         </span>
@@ -32,7 +32,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           className="p-2 bg-red-600 rounded-full hover:bg-red-700"
           onClick={handleDeleteClick}
         >
-          <LiaThumbtackSolid className="text-white text-lg" />
+          <LiaThumbtackSolid className="text-whiter text-lg" />
         </button>
       </div>
 
@@ -41,18 +41,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       </h2>
 
       <div className="relative overflow-hidden group">
-        <p
-          className="text-gray-secondary bg-secondary p-3 rounded-md text-sm line-clamp-3 overflow-hidden"
-          style={{
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 3,
-          }}
-        >
+        <p className="text-gray-secondary bg-secondary p-3 rounded-md text-sm line-clamp-3 overflow-hidden">
           {post.content}
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque eum
-          saepe, nostrum molestias voluptatibus sapiente necessitatibus ullam!
-          Consequatur, placeat at!
         </p>
         <div
           className="absolute inset-0 bg-gradient-to-t from-primary
@@ -60,7 +50,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         ></div>{" "}
       </div>
 
-      <div className="flex items-center mt-2 text-gray-300">
+      <div className="flex items-center mt-1 text-gray-300">
         <LiaHeartSolid className="mr-1" />
         0
         <LiaComment className="ml-4 mr-1" />0
