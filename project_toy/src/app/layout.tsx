@@ -3,6 +3,8 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { RecoilRoot } from "recoil";
 import RecoilRootWrapper from "@/store/RecoilWrapper";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const roboto = Roboto({
   weight: "400",
@@ -21,8 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={`${roboto.className} relative px-4`}>
+        <Header />
         <RecoilRootWrapper>{children}</RecoilRootWrapper>
+        <Footer />
       </body>
     </html>
   );
