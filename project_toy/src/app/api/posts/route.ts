@@ -25,10 +25,10 @@ export async function POST(req: Request) {
     };
     console.log("req.body:", newPost);
 
-    await db.collection("posts").insertOne(newPost); // 변환된 데이터 사용
+    await db.collection("posts").insertOne(newPost as any); // 변환된 데이터 사용
     return NextResponse.json(
       { message: "Post added successfully" },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     console.error("Failed to add post:", error);

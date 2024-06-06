@@ -11,9 +11,9 @@ export const useAddPost = () => {
 
 // 삭제
 export const useDeletePost = () => {
-  return useRecoilCallback(({ set }) => (postId: number) => {
+  return useRecoilCallback(({ set }) => (postId: string) => {
     set(postListState, (prevPostList) =>
-      prevPostList.filter((post) => post.post_id !== postId)
+      prevPostList.filter((post) => post._id !== postId)
     );
   });
 };
