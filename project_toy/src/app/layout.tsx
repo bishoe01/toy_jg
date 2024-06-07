@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { RecoilRoot } from "recoil";
 import RecoilRootWrapper from "@/store/RecoilWrapper";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -23,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} relative px-4 pb-24 pt-20`}>
+      <body
+        className={`${roboto.className} relative px-4 pb-24 pt-20 flex flex-col min-h-screen max-w-xl`}
+      >
         <Header />
         <RecoilRootWrapper>{children}</RecoilRootWrapper>
         <Footer />

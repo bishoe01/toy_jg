@@ -10,27 +10,29 @@ function Footer() {
 
   const isActive = (path: string) => pathname === path;
   return (
-    <div className="fixed bottom-0 left-0 flex items-center justify-around w-full h-18 bg-bg py-4 px-4 z-10">
-      <Link href={"/"} className="flex flex-col items-center">
-        {isActive("/") ? <GoHomeFill size={32} /> : <GoHome size={32} />}
-        <span className={`${MENU_STYLE}`}>Home</span>
-      </Link>
-      <Link href={"/likes"} className="flex flex-col items-center">
-        {isActive("/likes") ? (
-          <IoIosHeart size={32} />
-        ) : (
-          <IoIosHeartEmpty size={32} />
-        )}
-        <span className={`${MENU_STYLE}`}>Likes</span>
-      </Link>
-      <Link href={"/mypage"} className="flex flex-col items-center">
-        {isActive("/mypage") ? (
-          <BsFillPersonFill size={32} />
-        ) : (
-          <BsPerson size={32} />
-        )}
-        <span className={`${MENU_STYLE}`}>Profile</span>
-      </Link>
+    <div className="fixed bottom-0 left-0 w-full z-10">
+      <div className="max-w-xl mx-auto flex items-center justify-around h-18 bg-bg py-4 px-4">
+        <Link href={"/"} className="flex flex-col items-center">
+          {isActive("/") ? <GoHomeFill size={32} /> : <GoHome size={32} />}
+          <span className={`${MENU_STYLE}`}>Home</span>
+        </Link>
+        <Link href={"/likes"} className="flex flex-col items-center">
+          {isActive("/likes") ? (
+            <IoIosHeart size={32} />
+          ) : (
+            <IoIosHeartEmpty size={32} />
+          )}
+          <span className={`${MENU_STYLE}`}>Likes</span>
+        </Link>
+        <Link href={"/mypage"} className="flex flex-col items-center">
+          {isActive("/mypage") ? (
+            <BsFillPersonFill size={32} />
+          ) : (
+            <BsPerson size={32} />
+          )}
+          <span className={`${MENU_STYLE}`}>Profile</span>
+        </Link>
+      </div>
     </div>
   );
 }

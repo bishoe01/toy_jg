@@ -37,11 +37,11 @@ export default function RegisterPage() {
 
           Swal.fire({
             title: "게시글 등록 성공!",
-            html: "<b></b> 밀리초 후에 자동으로 닫힙니다.",
-            timer: 1200,
+            html: "<b></b> 곧 자동으로 닫힙니다.",
+            timer: 1000,
             timerProgressBar: true,
             customClass: {
-              timerProgressBar: "my-custom-progress-bar", // 로딩바 변경
+              timerProgressBar: "my-custom-progress-bar",
             },
             background: "#383838",
             color: "#FBFBFB",
@@ -75,7 +75,7 @@ export default function RegisterPage() {
       }}
     >
       {({ isValid, isSubmitting }) => (
-        <Form className="max-w-md mx-auto py-8 px-8 bg-primary rounded-2xl shadow-md">
+        <Form className="max-w-xl w-full mx-auto py-8 px-8 bg-primary rounded-2xl shadow-md">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">
             게시글 등록
           </h2>

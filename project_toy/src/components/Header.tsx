@@ -17,7 +17,7 @@ function Header() {
   const title = titleMap[pathname];
 
   return (
-    <section className="p-6 py-6 mb-1 bg-bg z-40 flex w-full items-center justify-between fixed top-0 left-0">
+    <section className="p-6 py-6 mb-1 bg-bg z-40 flex w-full items-center justify-between absolute top-0 left-0">
       {pathname === "/register" && (
         <Link href={"/"}>
           <FaArrowLeft size={24} color="#B4B4B4" />

@@ -1,9 +1,13 @@
 "use client";
+import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  username: Yup.string()
+  id: Yup.string()
     .required("아이디를 입력해주세요.")
     .max(10, "최대 10자까지 입력 가능합니다.")
     .matches(/^[a-zA-Z0-9]+$/, "아이디는 특수문자 입력이 불가능합니다."),
@@ -14,76 +18,106 @@ const validationSchema = Yup.object({
 });
 
 export default function LoginPage() {
+  const router = useRouter();
   return (
-    <Formik
-      initialValues={{ username: "", password: "" }}
-      initialErrors={{
-        username: "아이디를 입력해주세요.",
-        password: "비밀번호를 입력해주세요.",
-      }}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        // TODO: 로그인 로직?
-        console.log(values);
-      }}
-    >
-      {({ isValid, isSubmitting }) => (
-        <Form className="border-2 w-full border-green-400 max-w-lg mx-auto p-8 bg-white rounded shadow-md">
-          <h2 className="text-2xl font-bold mb-4">LOG IN</h2>
+    <div className="w-full max-w-sm p-6 bg-bg rounded-xl shadow-md">
+      <button onClick={() => router.push("/")} className="mb-4 text-gray-500 ">
+        <FaArrowLeft size={24} />
+      </button>
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">Log in</h2>
 
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              아이디
-            </label>
-            <Field
-              type="text"
-              id="username"
-              name="username"
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <ErrorMessage
-              name="username"
-              component="p"
-              className="text-red-500 text-xs italic"
-            />
-          </div>
+      <Formik
+        initialValues={{ id: "", password: "" }}
+        initialErrors={{
+          id: "아이디를 입력해주세요.",
+          password: "비밀번호를 입력해주세요.",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            const response = await axios.post("/api/login", values);
+            const { token } = response.data;
+            localStorage.setItem("token", token);
 
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              비밀번호
-            </label>
-            <Field
-              type="password"
-              id="password"
-              name="password"
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <ErrorMessage
-              name="password"
-              component="p"
-              className="text-red-500 text-xs italic"
-            />
-          </div>
+            Swal.fire({
+              title: "로그인 성공!",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              router.push("/"); // 홈으로 이동
+            });
+          } catch (error) {
+            console.error("로그인 실패:", error);
+            Swal.fire({
+              title: "로그인 실패",
+              text: "아이디 또는 비밀번호를 확인해주세요.",
+              icon: "error",
+            });
+          } finally {
+            setSubmitting(false);
+          }
+        }}
+      >
+        {({ isValid, isSubmitting }) => (
+          <Form className="space-y-4">
+            <div>
+              <label htmlFor="id" className="block text-green-500 font-medium">
+                ID
+              </label>
+              <Field
+                type="text"
+                id="id"
+                name="id"
+                placeholder="아이디 입력"
+                className="block w-full mt-1 p-2.5 bg-secondary rounded text-white "
+              />
+              <ErrorMessage
+                name="id"
+                component="p"
+                className="text-red-500 text-xs italic mt-1"
+              />
+            </div>
 
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              disabled={!isValid}
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-400 ${
-                !isValid && !isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`} // 초기 비활성화 스타일
-            >
-              로그인
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-green-500 font-medium"
+              >
+                Password
+              </label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                placeholder="비밀번호 입력"
+                className="block w-full mt-1 p-2.5 bg-secondary rounded text-white "
+              />
+              <ErrorMessage
+                name="password"
+                component="p"
+                className="text-red-500 text-xs italic mt-1"
+              />
+            </div>
+
+            <div className="text-right">
+              <a href="#" className="text-sm text-green-500 hover:underline">
+                Forgot Password?
+              </a>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={!isValid || isSubmitting}
+                className="block w-full py-2.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition disabled:opacity-50"
+              >
+                Login
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 }
