@@ -1,17 +1,10 @@
 "use client";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { postListState } from "@/store/posts";
 import PostCard from "./PostCard";
-import { useEffect } from "react";
-import axios from "axios";
 
 const PostList: React.FC = () => {
-  const [postList, setPostList] = useRecoilState(postListState);
-  useEffect(() => {
-    axios.get("/api/posts").then((res) => {
-      setPostList(res.data);
-    });
-  }, []);
+  const postList = useRecoilValue(postListState);
 
   return (
     <div className=" w-full flex flex-col-reverse gap-4">

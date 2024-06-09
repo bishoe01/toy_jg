@@ -1,5 +1,6 @@
+"use client";
 import { useDeletePost } from "@/hooks/usePostsActions";
-import { confirm_alert } from "@/utils/confirmDelete";
+import { confirm_alert } from "@/utils/confirmAlerts";
 import { useRouter } from "next/navigation";
 import { LiaComment, LiaHeartSolid, LiaThumbtackSolid } from "react-icons/lia";
 import { Posts } from "@/type";
@@ -8,9 +9,14 @@ interface PostCardProps {
   post: Posts;
 }
 
+const BUTTON_STYLE = "py-1 px-2 text-sm border-[1px] rounded-lg";
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
   const deletePost = useDeletePost();
+  //   const user = useRecoilValue(userState);
+  const user = {
+    id: "a444",
+  };
 
   const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -28,12 +34,26 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <span className="text-sm font-medium text-whiter">
           {post.writer.id}
         </span>
-        <button
-          className="p-2 bg-red-600 rounded-full hover:bg-red-700"
-          onClick={handleDeleteClick}
-        >
-          <LiaThumbtackSolid className="text-whiter text-lg" />
-        </button>
+        {user?.id === post.writer.id && (
+          <div className="flex items-center gap-1">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/posts/edit/${post._id}`);
+              }}
+              className={`${BUTTON_STYLE} border-green-400 text-green-400 `}
+            >
+              수정
+            </button>
+            <button
+              className={`${BUTTON_STYLE} border-whiter text-whiter`}
+              onClick={handleDeleteClick}
+            >
+              {/* <LiaThumbtackSolid className="text-whiter text-lg" /> */}
+              삭제하기
+            </button>
+          </div>
+        )}
       </div>
 
       <h2 className="text-xl font-bold text-white mb-2 line-clamp-2">
@@ -44,10 +64,12 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <p className="text-gray-secondary bg-secondary p-3 rounded-md text-sm line-clamp-3 overflow-hidden">
           {post.content}
         </p>
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-primary
-         to-transparent pointer-events-none group-hover:hidden"
-        ></div>{" "}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent pointer-events-none group-hover:hidden"></div>{" "}
+        <div className="absolute inset-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+          <p className="text-gray-secondary bg-secondary rounded-md text-sm">
+            {post.content}
+          </p>
+        </div>
       </div>
 
       <div className="flex items-center mt-1 text-gray-300">
