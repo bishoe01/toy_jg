@@ -1,5 +1,4 @@
 
-// 타입 정의
 export type Writer = {
   id: string;
 };
@@ -11,4 +10,9 @@ export type Posts = {
   content: string;
   date: string;  // DATE타입에서 -> string타입으로 변경(ISO 포맷)
   writer: Writer;
+  likedUser:string[];
 };
+export type User = {
+    id : string;
+    likedPosts : string[];
+}
