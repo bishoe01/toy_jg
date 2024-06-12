@@ -1,25 +1,23 @@
 import connectDB from "@/utils/database";
 import { ObjectId } from "mongodb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(req: NextRequest, { params }: { params: { postId: string }}) {
-    try {
-    const postId = new ObjectId(params.postId); // ObjectId 변환
-    console.log("postId:", postId)
-
-    const db = await connectDB();
-    const result = await db.collection("posts").deleteOne({ _id: postId }); 
-
-    if (result.deletedCount === 0) {
-      return NextResponse.json({ message: "포스트 실패" }, { status: 404 });
+export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
+  try {
+    if (!ObjectId.isValid(params.postId)) { // params.postId 사용
+      return new NextResponse(JSON.stringify({ message: 'Invalid post ID' }), { status: 400 });
     }
 
-    return NextResponse.json(
-      { message: "성공적으로 삭제 완료 !" },
-      { status: 200 }
-    );
+    const db = await connectDB();
+    const post = await db.collection('posts').findOne({ _id: new ObjectId(params.postId) });
+
+    if (!post) {
+      return new NextResponse(JSON.stringify({ message: 'Post not found' }), { status: 404 });
+    }
+
+    return new NextResponse(JSON.stringify(post), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
-    console.error("Failed to delete post:", error);
-    return NextResponse.json({ message: "500에러" }, { status: 500 });
+    console.error('Failed to fetch post:', error);
+    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
   }
 }

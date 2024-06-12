@@ -14,3 +14,14 @@ export const confirm_alert = (
     if (result.isConfirmed) onConfirm();
   });
 };
+
+
+  export const showSwal = (title: string, text: string, icon: "success" | "error") => {
+    Swal.fire({
+      title,
+      text,
+      icon,
+      background: "#383838",
+      color: "#FBFBFB",
+    });
+  };

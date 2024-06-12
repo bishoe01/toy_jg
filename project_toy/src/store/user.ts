@@ -1,10 +1,10 @@
 // store/userStore.ts
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 
 export const userState = atom({
   key: 'userState',
   default: {
-    id: '',
+    nickname: '',
     isAuthenticated: false,
   },
 });

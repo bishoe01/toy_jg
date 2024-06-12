@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 
+@font-face {
+    font-family: 'DynaPuff';
+    src: url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+}
 
+.titles{
+    font-family: 'DynaPuff', sans-serif !important;
+}
 *{
     padding: 0;
     margin: 0;
@@ -13,7 +20,7 @@
 }
 
 :root {
-  @apply max-w-xl mx-auto bg-bg text-whiter;
+  @apply max-w-4xl mx-auto bg-bg text-whiter;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;

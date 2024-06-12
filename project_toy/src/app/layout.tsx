@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -6,8 +7,9 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 const roboto = Roboto({
-  weight: "400",
+  weight: ["400", "700"],
   subsets: ["latin"],
+  display: "swap", // 추가: 로딩 시 FOUT(Flash of Unstyled Text) 방지
 });
 
 export const metadata: Metadata = {
@@ -17,17 +19,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.className} relative px-4 pb-24 pt-20 flex flex-col min-h-screen max-w-xl`}
-      >
-        <Header />
-        <RecoilRootWrapper>{children}</RecoilRootWrapper>
-        <Footer />
+      <body className={roboto.className}>
+        <div className="relative px-4  pt-20 flex flex-col min-h-screen max-w-xl mx-auto">
+          <Header />
+          <RecoilRootWrapper>{children}</RecoilRootWrapper>
+          <Footer />
+        </div>
       </body>
     </html>
   );

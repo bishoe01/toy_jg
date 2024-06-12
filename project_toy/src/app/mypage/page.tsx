@@ -1,20 +1,14 @@
-import Image from "next/image";
-import React from "react";
+import FilteredPostList from "@/components/FilteredPostList";
 
 type Props = {};
 
-function page({}: Props) {
+function MyPage({}: Props) {
+  // myPostListState;
   return (
-    <div>
-      <Image
-        src="/construction.png"
-        width={500}
-        height={600}
-        alt="construction"
-      />
-      <h1>공사중입니다</h1>
-    </div>
+    <main className="flex flex-col min-h-screen items-center">
+      <FilteredPostList />
+    </main>
   );
 }
 
-export default page;
+export default MyPage;

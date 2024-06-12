@@ -1,18 +1,14 @@
 import connectDB from "@/utils/database";
-import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs"; // 비밀번호 암호화 라이브러리
-import jwt from "jsonwebtoken"; // JWT 라이브러리
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
   try {
     const db = await connectDB();
     const { id, password } = await request.json();
-    
 
     const user = await db.collection("user").findOne({ id });
-    console.log("user:", user)
-
     if (!user || !bcrypt.compareSync(password, user.password)) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }

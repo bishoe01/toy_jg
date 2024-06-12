@@ -1,18 +1,23 @@
-
-export type Writer = {
-  id: string;
-};
-
-
 export type Posts = {
    _id?: string;
   title: string;
   content: string;
-  date: string;  // DATE타입에서 -> string타입으로 변경(ISO 포맷)
-  writer: Writer;
-  likedUser:string[];
+  nickname: string;
+  date?: Date;
 };
+
 export type User = {
-    id : string;
-    likedPosts : string[];
+    nickname : string;
+    password : string;
 }
+export type Comment ={
+    _id : string;
+    postId : string;
+    content : string;
+    nickname : string;
+    date : Date;
+    
+}
+
+
+export const API_URL = 'http://15.165.26.9:8080/';

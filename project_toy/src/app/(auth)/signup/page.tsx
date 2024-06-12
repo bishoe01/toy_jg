@@ -1,4 +1,5 @@
 "use client";
+import { API_URL } from "@/type";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/navigation";
@@ -7,17 +8,17 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  id: Yup.string()
+  nickname: Yup.string()
     .required("아이디를 입력해주세요.")
     .max(10, "최대 10자까지 입력 가능합니다.")
     .matches(/^[a-zA-Z0-9]+$/, "아이디는 특수문자 입력이 불가능합니다."),
   password: Yup.string()
     .required("비밀번호를 입력해주세요.")
-    .min(8, "비밀번호는 8자 이상이어야 합니다.")
+    .min(6, "비밀번호는 6자 이상이어야 합니다.")
     .max(15, "최대 15자까지 입력 가능합니다."),
   confirmPassword: Yup.string()
     .required("비밀번호를 한번 더 입력해주세요.")
-    .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다."),
+    .oneOf([Yup.ref("password")], "비밀번호가 일치하지 않습니다."),
 });
 
 export default function SignupPage() {
@@ -33,12 +34,13 @@ export default function SignupPage() {
       </h2>
 
       <Formik
-        initialValues={{ id: "", password: "", confirmPassword: "" }}
+        initialValues={{ nickname: "", password: "", confirmPassword: "" }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const response = await axios.post("/api/signup", values);
-            console.log("response:", response);
+            const response = await axios.post(`${API_URL}api/users`, values);
+            // console.log("response:", response);
+            // console.log("values:", values);
 
             Swal.fire({
               title: "회원가입 성공!",
@@ -63,18 +65,21 @@ export default function SignupPage() {
         {({ isValid, isSubmitting }) => (
           <Form className="space-y-4">
             <div>
-              <label htmlFor="id" className="block text-green-500 font-medium">
+              <label
+                htmlFor="nickname"
+                className="block text-green-500 font-medium"
+              >
                 ID
               </label>
               <Field
                 type="text"
-                id="id"
-                name="id"
+                id="nickname"
+                name="nickname"
                 placeholder="아이디 입력"
                 className="block w-full mt-1 p-2.5 bg-secondary rounded text-white "
               />
               <ErrorMessage
-                name="id"
+                name="nickname"
                 component="p"
                 className="text-red-500 text-xs italic mt-1"
               />
@@ -123,7 +128,7 @@ export default function SignupPage() {
             <div>
               <button
                 type="submit"
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid}
                 className="block w-full py-2.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition disabled:opacity-50"
               >
                 Sign up

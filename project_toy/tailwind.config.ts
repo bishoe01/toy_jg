@@ -14,6 +14,7 @@ const config: Config = {
             secondary: "#4A4A4A",
             bgtext:"B7B7B7",
             whiter: "#FBFBFB",
+            emphasize:"#F87B20"
         },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

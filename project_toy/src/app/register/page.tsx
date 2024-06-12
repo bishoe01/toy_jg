@@ -1,37 +1,64 @@
 "use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios"; // axios import
-import { useRouter } from "next/navigation";
+import axios from "axios";
 import Swal from "sweetalert2";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/store/user";
+import { API_URL } from "@/type";
 
 const validationSchema = Yup.object({
   title: Yup.string()
     .required("제목을 입력해주세요.")
-    .max(10, "최대 10자까지 입력 가능합니다."),
+    .max(15, "최대 15자까지 입력 가능합니다."),
   content: Yup.string()
     .required("내용을 입력해주세요.")
-    .min(10, "최소 10자 이상 입력해주세요.")
-    .max(100, "최대 1000자까지 입력 가능합니다."),
+    .min(3, "최소 3자 이상 입력해주세요.")
+    .max(200, "최대 2000자까지 입력 가능합니다."),
 });
 
 export default function RegisterPage() {
   const router = useRouter();
+  const user = useRecoilValue(userState);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const nickname = localStorage.getItem("nickname");
+    if (!token || !nickname) {
+      Swal.fire({
+        title: "유저 정보가 없습니다.",
+        text: "로그인 해주세요",
+        icon: "warning",
+        confirmButtonText: "확인",
+        background: "#383838",
+        color: "#FBFBFB",
+      }).then(() => {
+        router.push("/login");
+      });
+    }
+  }, [router]);
+
   return (
     <Formik
       initialValues={{ title: "", content: "" }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
         try {
-          const response = await axios.post("/api/posts", {
-            title: values.title,
-            content: values.content,
-            date: new Date().toISOString(),
-            writer: {
-              id: "한글맨", //TODO - 변경예정 - 로그인 이후
+          const token = localStorage.getItem("token");
+          const response = await axios.post(
+            `${API_URL}api/posts`,
+            {
+              title: values.title,
+              content: values.content,
             },
-          });
-          console.log("response:", response);
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
 
           let timerInterval: NodeJS.Timeout;
 
@@ -75,7 +102,7 @@ export default function RegisterPage() {
       }}
     >
       {({ isValid, isSubmitting }) => (
-        <Form className="max-w-xl w-full mx-auto py-8 px-8 bg-primary rounded-2xl shadow-md">
+        <Form className="w-full mx-auto py-8 px-8 bg-primary rounded-2xl shadow-md">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">
             게시글 등록
           </h2>
